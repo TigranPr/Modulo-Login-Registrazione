@@ -1,0 +1,47 @@
+/* Impostazioni generali del corpo della pagina */
+body {box-sizing: border-box;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;background-color: #f2f2f2;color: #333;padding: 0;margin: 0;}
+
+/* Stile del titolo */
+h1 {font-size: 2rem;margin-top: 30px;}
+
+/* Stili per le etichette */
+label {font-weight: 600;font-size: 1rem;color: #555;}
+
+/* Stili per il modulo di registrazione */
+#registrationForm {width: 90%;max-width: 450px;margin: 50px auto;padding: 30px;background-color: #fff;border: solid 1px #dce1e7;border-radius: 10px;box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);transition: all 0.3s ease;}
+
+/* Effetto hover per il modulo di registrazione */
+#registrationForm:hover {box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);}
+
+/* Stili per gli input all'interno del modulo */
+#registrationForm input {padding: 12px;width: 423px;margin-bottom: 10px;margin-top: 8px;border-radius: 5px;font-size: 1rem;transition: border 0.3s ease;}
+
+/* Stile per gli input quando sono in focus */
+#registrationForm input:focus {border-color: #007BFF;outline: none;box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);}
+
+/* Stili per i link */
+a {text-decoration: none;color: #e74c3c;font-weight: 500;}
+
+/* Stili per i link quando l'utente passa il mouse sopra */
+a:hover {color: #c0392b;}
+
+/* Stili per il pulsante di registrazione */
+#registrationButton {padding: 12px 20px;background-color: #e74c3c;color: white;border-radius: 5px;border: none;cursor: pointer;font-size: 1rem;font-weight: 600;display: block;width: 100%;transition: background-color 0.3s ease, box-shadow 0.3s ease;}
+
+/* Stili per il pulsante di registrazione in hover */
+#registrationButton:hover {background-color: #c0392b;box-shadow: 0 4px 8px rgba(192, 57, 43, 0.2);}
+
+/* Classe errore per input con errore */
+.errore {border: 1px solid red;}
+
+/* Classe per input con stile normale */
+.e{border: 1px solid #dce1e7;}
+
+/* Media query per schermi con larghezza minima di 768px */
+@media (min-width: 768px) {
+    /* Aumenta il padding del modulo su schermi più grandi */
+    #registrationForm {padding: 40px;}
+
+    /* Imposta la larghezza automatica del pulsante su schermi più grandi */
+    #registrationButton {width: auto;}
+}
