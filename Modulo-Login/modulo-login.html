@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="modulo-login.css">
+    <script src="modulo-login.js" defer></script>
+    <title>Modulo Login</title>
+</head>
+<body>
+
+    <h1 style="text-align: center; color: #007BFF;">Login</h1>
+
+    <form action="dati.php" method="post" id="loginForm">
+        <!-- Email -->
+        <label for="email">Inserisci la tua email:</label><br>
+        <input type="email" id="email" name="email" placeholder="Email" class="e">
+        <span class="sp1"></span><br><br>
+
+        <!-- Password -->
+        <label for="password">Inserisci la tua password:</label><br>
+        <input type="password" id="password" name="password" placeholder="Password" class="e">
+        <span class="sp2"></span><br><br>
+
+        <!-- Link al modulo di registrazione -->
+        <p style="display: inline-block;">
+            Non hai un account? 
+            <a href="../Modulo-Registration/modulo-registration.html" target="_blank">Sign Up</a>
+        </p>
+
+        <!-- Pulsante di invio -->
+        <button type="submit" id="loginButton">Login</button>
+    </form>
+
+</body>
+</html>
