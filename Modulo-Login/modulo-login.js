@@ -62,9 +62,31 @@ LogForm.addEventListener('submit', (e) => {
 
     // Verifica se non ci sono errori e se entrambi i campi sono riempiti correttamente
     if (!error && Email.value !== '' && Password.value !== '') {
-        alert('Login effettuato!');  // Mostra un messaggio di login effettuato
-        LogForm.submit();  // Invia il form
+        fetch("http://localhost:8025/mioUtente/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email: Email.value,
+                password: Password.value
+            })
+        })
+        .then(response => {
+            console.log("Status Code:", response.status);
+            return response.text(); // Legge la risposta dal server
+        })
+        .then(data => {
+            console.log("Risposta dal server:", data); // Debug
+            alert(data);
+            if (data.includes("Login riuscito")) {
+                window.location.href = "dashboard.html"; // Reindirizza dopo il login
+            }
+        })
+        .catch(error => console.error("Errore nella richiesta:", error));
+        
     }
+    
 });
 
 // Aggiunge un event listener per il campo email, che viene attivato quando l'utente perde il focus (blur)

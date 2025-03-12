@@ -3,13 +3,15 @@ const RegForm = document.getElementById('registrationForm');
 
 // Seleziona i campi del modulo per nome utente, email e password tramite i rispettivi ID
 const NomeUtente = document.getElementById('utente');
+const CognomeUtente = document.getElementById('cognome');
 const Email = document.getElementById('email');
 const Password = document.getElementById('password');
 
 // Seleziona gli span che mostreranno gli errori, uno per ciascun campo
 const Sp1 = document.querySelector('.sp1'); // Span per nome utente
-const Sp2 = document.querySelector('.sp2'); // Span per email
-const Sp3 = document.querySelector('.sp3'); // Span per password
+const Sp2 = document.querySelector('.sp2'); // Span per cognome
+const Sp3 = document.querySelector('.sp3'); // Span per email
+const Sp4 = document.querySelector('.sp4'); // Span per password
 
 // Seleziona il pulsante di registrazione tramite l'ID
 const RegButton = document.getElementById('registrationButton');
@@ -21,11 +23,13 @@ RegForm.addEventListener('submit', (e) => {
 
     // Aggiunge la classe 'e' (stato predefinito) ai campi nome utente, email e password
     NomeUtente.classList.add('e');
+    CognomeUtente.classList.add('e');
     Email.classList.add('e');
     Password.classList.add('e');
 
     // Rimuove la classe 'errore' da tutti i campi
     NomeUtente.classList.remove('errore');
+    CognomeUtente.classList.remove('errore');
     Email.classList.remove('errore');
     Password.classList.remove('errore');
 
@@ -33,7 +37,7 @@ RegForm.addEventListener('submit', (e) => {
     let error = false;
 
     // Controlla se i campi nome utente, email o password sono vuoti
-    if (NomeUtente.value === '' || Email.value === '' || Password.value === '') {
+    if (NomeUtente.value === '' || CognomeUtente.value === '' || Email.value === '' || Password.value === '') {
         // Imposta l'errore a true e aggiunge la classe 'errore' ai campi vuoti
         error = true;
         NomeUtente.classList.add('errore');
@@ -41,15 +45,20 @@ RegForm.addEventListener('submit', (e) => {
         Sp1.innerHTML = 'Inserisci nome utente (area obbligatoria)';
         Sp1.style.color = 'red';
 
+        CognomeUtente.classList.add('errore');
+        CognomeUtente.classList.remove('e');
+        Sp2.innerHTML = 'Inserisci cognome utente (area obbligatoria)';
+        Sp2.style.color = 'red';
+
         Email.classList.add('errore');
         Email.classList.remove('e');
-        Sp2.innerHTML = 'Inserisci email (area obbligatoria)';
-        Sp2.style.color = 'red';
+        Sp3.innerHTML = 'Inserisci email (area obbligatoria)';
+        Sp3.style.color = 'red';
 
         Password.classList.add('errore');
         Password.classList.remove('e');
-        Sp3.innerHTML = 'Inserisci password (area obbligatoria)';
-        Sp3.style.color = 'red';
+        Sp4.innerHTML = 'Inserisci password (area obbligatoria)';
+        Sp4.style.color = 'red';
     } else {
         // Se tutti i campi sono compilati, rimuove i messaggi di errore
         error = false;
@@ -59,12 +68,54 @@ RegForm.addEventListener('submit', (e) => {
         Sp2.style.color = '';
         Sp3.innerHTML = '';
         Sp3.style.color = '';
+        Sp4.innerHTML = '';
+        Sp4.style.color = '';
     }
 
     // Se non ci sono errori, mostra un alert e invia il form
-    if (!error) {
-        alert('Registrazione effettuata!');
-        RegForm.submit();
+    if (!error && NomeUtente.value !== '' && CognomeUtente.value !== '' && Email.value !== '' && Password.value !== '') {
+        fetch("http://localhost:8025/mioUtente/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                nome: NomeUtente.value,
+                cognome: CognomeUtente.value,
+                email: Email.value,
+                password: Password.value
+            })
+        })
+        .then(response => {
+            console.log("Status Code:", response.status);
+            return response.text(); // Legge la risposta dal server
+        })
+        .then(data => {
+            console.log("Risposta dal server:", data); // Debug
+            alert(data);
+            if (data.includes("Register riuscito")) {
+                window.location.href = "dashboard.html";
+            }
+        })
+        .catch(error => console.error("Errore nella richiesta:", error));
+        
+    }
+});
+
+
+// Aggiunge un event listener per il campo cognome quando perde il focus (blur)
+CognomeUtente.addEventListener('blur', () => {
+    // Controlla se il cognome é vuoto
+    if (CognomeUtente.value === '') {
+        error = true;
+        CognomeUtente.classList.add('errore');
+        CognomeUtente.classList.remove('e');
+        Sp2.innerHTML = 'Inserisci cognome (area obbligatoria)';
+        Sp2.style.color = 'red';
+    } else {
+        CognomeUtente.classList.remove('errore');
+        CognomeUtente.classList.add('e');
+        Sp2.innerHTML = '';
     }
 });
 
@@ -75,12 +126,12 @@ Email.addEventListener('blur', () => {
         error = true;
         Email.classList.add('errore');
         Email.classList.remove('e');
-        Sp2.innerHTML = 'Inserisci email (area obbligatoria)';
-        Sp2.style.color = 'red';
+        Sp3.innerHTML = 'Inserisci email (area obbligatoria)';
+        Sp3.style.color = 'red';
     } else {
         Email.classList.remove('errore');
         Email.classList.add('e');
-        Sp2.innerHTML = '';
+        Sp3.innerHTML = '';
     }
 });
 
@@ -91,12 +142,12 @@ Password.addEventListener('blur', () => {
         error = true;
         Password.classList.add('errore');
         Password.classList.remove('e');
-        Sp3.innerHTML = 'Inserisci password (area obbligatoria)';
-        Sp3.style.color = 'red';
+        Sp4.innerHTML = 'Inserisci password (area obbligatoria)';
+        Sp4.style.color = 'red';
     } else {
         Password.classList.remove('errore');
         Password.classList.add('e');
-        Sp3.innerHTML = '';
+        Sp4.innerHTML = '';
     }
 });
 
